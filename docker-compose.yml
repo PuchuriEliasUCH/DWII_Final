@@ -1,0 +1,22 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: altamesa-db
+    restart: unless-stopped
+
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Admin123!"
+      MSSQL_PID: "Express"
+
+    # Ya tenemos instalado SQLSERVER XDD 
+    # Puerto por defecto: 1433
+    # Orden -> "puerto_PC:puerto_MV"
+    ports:
+      - "1434:1433" 
+
+    volumes:
+      - sql_data:/var/opt/mssql
+
+volumes:
+  sql_data:

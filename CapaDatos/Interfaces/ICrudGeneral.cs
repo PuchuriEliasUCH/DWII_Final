@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CapaDatos.Interfaces
+{
+    internal interface ICrudGeneral<T> where T : class
+    {
+        List<T> Listar();
+        Boolean Insertar(T entidad);
+        Boolean Actualizar(T entidad);
+        Boolean Eliminar(int id);
+    }
+}

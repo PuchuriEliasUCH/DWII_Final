@@ -1,0 +1,109 @@
+## =========================
+## Build / output
+## =========================
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.log
+*.tlog
+*.tmp
+*.temp
+*.cache
+*.pdb
+*.ilk
+*.idb
+*.obj
+*.exe
+*.dll
+*.appx
+*.appxbundle
+*.msix
+*.msixbundle
+
+## =========================
+## Visual Studio
+## =========================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
+
+## Rider / VSCode
+.idea/
+.vscode/
+
+## =========================
+## NuGet
+## =========================
+packages/
+*.nupkg
+*.snupkg
+# Mantén esto si usas PackageReference (recomendado)
+!**/packages/build/
+!**/packages/repositories.config
+
+## =========================
+## Test / coverage
+## =========================
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+## =========================
+## Publish / deploy
+## =========================
+publish/
+*.Publish.xml
+*.pubxml.user
+
+## =========================
+## IIS Express
+## =========================
+/.vs/config/applicationhost.config
+/.vs/config/applicationhost.config.backup
+
+## =========================
+## Entity Framework
+## =========================
+# Migraciones SÍ se versionan
+# No ignores Migrations/
+
+## =========================
+## SQL / Local DB
+## =========================
+*.mdf
+*.ldf
+
+## =========================
+## Config sensibles
+## =========================
+# Mantén el template, ignora overrides locales
+appsettings.*.json
+!appsettings.json
+
+Web.config.user
+*.secrets.json
+
+## =========================
+## Docker
+## =========================
+docker-compose.override.yml
+.env
+
+## =========================
+## OS files
+## =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+## =========================
+## Otros
+## =========================
+_ReSharper*/
+*.DotSettings.user
