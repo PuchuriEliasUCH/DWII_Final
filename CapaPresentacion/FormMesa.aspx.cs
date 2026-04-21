@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using CapaNegocio;
@@ -9,17 +6,25 @@ using Entidades;
 
 namespace CapaPresentacion
 {
-    public partial class FormMesa : System.Web.UI.Page
+    public partial class FormMesa : Page
     {
         private readonly MesaNegocio _mesaNeg = new MesaNegocio();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) {
+            if (Session["IdUsuario"] == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
+
+            if (!IsPostBack)
+            {
                 CargarDatos();
             }
         }
 
-        private void CargarDatos() {
+        private void CargarDatos()
+        {
             GvMesas.DataSource = _mesaNeg.Listar();
             GvMesas.DataBind();
         }
@@ -28,9 +33,10 @@ namespace CapaPresentacion
         {
             if (!Page.IsValid) return;
 
-            try {
-                
-                var mesa = new Mesa {
+            try
+            {
+                var mesa = new Mesa
+                {
                     Id_mesa = int.Parse(HfIdMesa.Value),
                     Numero = int.Parse(TxtNumero.Text),
                     Capacidad = int.Parse(DdlCapacidad.SelectedValue),
@@ -39,17 +45,22 @@ namespace CapaPresentacion
 
                 bool esNuevo = mesa.Id_mesa == 0;
 
-                if (esNuevo){
+                if (esNuevo)
+                {
                     LblMensaje.Text = "Mesa agregada correctamente";
                     _mesaNeg.Insertar(mesa);
-                } else {
+                }
+                else
+                {
                     LblMensaje.Text = "Mesa actualizada correctamente";
                     _mesaNeg.Actualizar(mesa);
                 }
 
                 CargarDatos();
                 BorrarFormulario();
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 LblMensaje.Text = ex.ToString();
             }
         }
@@ -68,7 +79,8 @@ namespace CapaPresentacion
             LblMensaje.Text = string.Empty;
         }
 
-        protected void GvMesas_RowDeleting(object sender, GridViewDeleteEventArgs e) {
+        protected void GvMesas_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
             int id = (int)GvMesas.DataKeys[e.RowIndex].Value;
             bool exito = _mesaNeg.Eliminar(id);
             LblMensaje.Text = exito ? "Mesa inhabilitada correctamente." : "Error al eliminar.";

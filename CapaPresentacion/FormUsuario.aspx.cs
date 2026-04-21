@@ -1,26 +1,30 @@
 ﻿using CapaNegocio;
-using Entidades;
 using Entidades.Dto.Usuarios;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace CapaPresentacion
 {
-    public partial class FormUsuario : System.Web.UI.Page
+    public partial class FormUsuario : Page
     {
         private readonly UsuarioNegocio _usuarioNeg = new UsuarioNegocio();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) {
+            if (Session["IdUsuario"] == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
+
+            if (!IsPostBack)
+            {
                 CargarDatos();
             }
         }
 
-        private void CargarDatos() { 
+        private void CargarDatos()
+        {
             GvUsuarios.DataSource = _usuarioNeg.ListarDTO();
             GvUsuarios.DataBind();
         }
@@ -64,7 +68,6 @@ namespace CapaPresentacion
                     CargarDatos();
                     BorrarFormulario();
                 }
-
             }
             catch (Exception ex)
             {

@@ -1,21 +1,21 @@
 ﻿using CapaDatos;
 using CapaDatos.Repositorios;
 using Entidades;
+using Entidades.Dto.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BCrypt.Net;
-using Entidades.Dto.Usuarios;
 
 namespace CapaNegocio
 {
     public class UsuarioNegocio
     {
-        public List<UsuarioListarDTO> ListarDTO() {
-            using (var tx = new Transacciones()) 
+        public List<UsuarioListarDTO> ListarDTO()
+        {
+            using (var tx = new Transacciones())
             {
                 var repo = new UsuarioRepository(tx);
                 return repo.ListarDTO();
@@ -31,23 +31,36 @@ namespace CapaNegocio
             }
         }
 
+        public Usuario Autenticar(string correo, string contrasena)
+        {
+            using (var tx = new Transacciones())
+            {
+                var repo = new UsuarioRepository(tx);
+                var usuario = repo.ObtenerPorCorreo(correo);
+
+                if (usuario == null) return null;
+                if (!usuario.Estado) return null;
+
+                bool claveValida = BCrypt.Net.BCrypt.Verify(contrasena, usuario.Contra_hash);
+
+                return claveValida ? usuario : null;
+            }
+        }
+
         public bool Insertar(UsuarioGuardarDTO usuario)
         {
             using (var tx = new Transacciones())
             {
                 try
                 {
-
                     usuario.Contra_hash = BCrypt.Net.BCrypt.HashPassword(usuario.Contra_hash);
-
-                    // BCrypt.Net.BCrypt.Verify(ingresada, base_de_datos)
 
                     var repo = new UsuarioRepository(tx);
                     repo.Insertar(usuario);
                     tx.Commit();
                     return true;
                 }
-                catch (SqlException ex)
+                catch (SqlException)
                 {
                     tx.Rollback();
                     return false;
@@ -61,10 +74,12 @@ namespace CapaNegocio
             {
                 try
                 {
-                    if (string.IsNullOrEmpty(usuario.Contra_hash)) 
-                    { 
+                    if (string.IsNullOrEmpty(usuario.Contra_hash))
+                    {
                         usuario.Contra_hash = null;
-                    } else { 
+                    }
+                    else
+                    {
                         usuario.Contra_hash = BCrypt.Net.BCrypt.HashPassword(usuario.Contra_hash);
                     }
 
@@ -73,10 +88,9 @@ namespace CapaNegocio
                     tx.Commit();
                     return true;
                 }
-                catch (SqlException ex)
+                catch (SqlException)
                 {
                     tx.Rollback();
-                    throw ex;
                     return false;
                 }
             }
@@ -93,7 +107,7 @@ namespace CapaNegocio
                     tx.Commit();
                     return true;
                 }
-                catch (SqlException ex)
+                catch (SqlException)
                 {
                     tx.Rollback();
                     return false;

@@ -11,11 +11,12 @@ using System.Threading.Tasks;
 
 namespace CapaDatos.Repositorios
 {
-    public class UsuarioRepository: Conexion
+    public class UsuarioRepository : Conexion
     {
         private readonly Transacciones _transaction;
 
-        public UsuarioRepository(Transacciones transaction) {
+        public UsuarioRepository(Transacciones transaction)
+        {
             _transaction = transaction;
         }
 
@@ -24,17 +25,21 @@ namespace CapaDatos.Repositorios
             var lista = new List<UsuarioListarDTO>();
 
             using (var con = new SqlConnection(_cnx))
+            using (var da = new SqlDataAdapter("sp_listar_usuarios_dto", _cnx))
+            {
+                da.SelectCommand.CommandType = CommandType.StoredProcedure;
 
-            using (var da = new SqlDataAdapter("sp_listar_usuarios_dto", _cnx)) {
                 var ds = new DataSet();
                 da.Fill(ds);
 
-                foreach (DataRow row in ds.Tables[0].Rows) {
-                    lista.Add(new UsuarioListarDTO { 
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    lista.Add(new UsuarioListarDTO
+                    {
                         Id_usuario = (int)row["id_usuario"],
                         NombreCompleto = row["NombreCompleto"].ToString(),
                         Correo = row["correo"].ToString(),
-                        NombreRol = row["nombre"].ToString(),
+                        NombreRol = row["nombre"].ToString()
                     });
                 }
             }
@@ -45,15 +50,17 @@ namespace CapaDatos.Repositorios
         public Usuario ObtenerPorId(int id)
         {
             using (var con = new SqlConnection(_cnx))
-            using (var da = new SqlDataAdapter("select * from usuario where id_usuario = @id", con)) 
+            using (var da = new SqlDataAdapter("select * from usuario where id_usuario = @id", con))
             {
                 da.SelectCommand.Parameters.AddWithValue("@id", id);
+
                 var ds = new DataSet();
                 da.Fill(ds);
 
                 if (ds.Tables[0].Rows.Count == 0) return null;
 
                 var row = ds.Tables[0].Rows[0];
+
                 return new Usuario
                 {
                     Id_usuario = (int)row["id_usuario"],
@@ -63,14 +70,47 @@ namespace CapaDatos.Repositorios
                     Correo = row["correo"].ToString(),
                     Contra_hash = row["contra_hash"].ToString(),
                     Estado = (bool)row["estado"],
-                    Fecha_registro = (DateTime)row["fecha_registro"]
+                    Fecha_registro = (DateTime)row["fecha_registro"],
+                    Updated_at = row["updated_at"] == DBNull.Value ? DateTime.MinValue : (DateTime)row["updated_at"],
+                    Updated_by = row["updated_by"] == DBNull.Value ? 0 : (int)row["updated_by"]
+                };
+            }
+        }
+
+        public Usuario ObtenerPorCorreo(string correo)
+        {
+            using (var con = new SqlConnection(_cnx))
+            using (var da = new SqlDataAdapter("select * from usuario where correo = @correo and estado = 1", con))
+            {
+                da.SelectCommand.Parameters.AddWithValue("@correo", correo);
+
+                var ds = new DataSet();
+                da.Fill(ds);
+
+                if (ds.Tables[0].Rows.Count == 0) return null;
+
+                var row = ds.Tables[0].Rows[0];
+
+                return new Usuario
+                {
+                    Id_usuario = (int)row["id_usuario"],
+                    Id_Rol = (int)row["id_rol"],
+                    Nombre = row["nombre"].ToString(),
+                    Apellido = row["apellido"].ToString(),
+                    Correo = row["correo"].ToString(),
+                    Contra_hash = row["contra_hash"].ToString(),
+                    Estado = (bool)row["estado"],
+                    Fecha_registro = (DateTime)row["fecha_registro"],
+                    Updated_at = row["updated_at"] == DBNull.Value ? DateTime.MinValue : (DateTime)row["updated_at"],
+                    Updated_by = row["updated_by"] == DBNull.Value ? 0 : (int)row["updated_by"]
                 };
             }
         }
 
         public bool Insertar(UsuarioGuardarDTO usuario)
         {
-            using (var cmd = _transaction.CrearTransaccion()) {
+            using (var cmd = _transaction.CrearTransaccion())
+            {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "sp_crear_usuario";
 
@@ -83,7 +123,7 @@ namespace CapaDatos.Repositorios
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
-        
+
         public bool Actualizar(UsuarioGuardarDTO usuario)
         {
             using (var cmd = _transaction.CrearTransaccion())
@@ -96,18 +136,16 @@ namespace CapaDatos.Repositorios
                 cmd.Parameters.AddWithValue("@nombre", usuario.Nombre);
                 cmd.Parameters.AddWithValue("@apellido", usuario.Apellido);
                 cmd.Parameters.AddWithValue("@correo", usuario.Correo);
-                cmd.Parameters.AddWithValue("@contra_hash", usuario.Contra_hash);
+                cmd.Parameters.AddWithValue("@contra_hash", usuario.Contra_hash == null ? (object)DBNull.Value : usuario.Contra_hash);
 
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
 
-
         public bool Eliminar(int id)
         {
             using (var cmd = _transaction.CrearTransaccion())
             {
-
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "sp_eliminar_usuario";
 
