@@ -85,21 +85,56 @@ begin
 end
 go
 
-select * from usuario;
+-- CATEGORIA
+
+create procedure sp_crear_categoria_producto
+    @nombre varchar(50),
+    @descripcion varchar(80),
+    @estado bit
+as
+begin
+    insert into categoria_producto (nombre, descripcion, estado)
+    values (@nombre, @descripcion, @estado)
+end
+go
+
+create procedure sp_actualizar_categoria_producto
+    @id int,
+    @nombre varchar(50),
+    @descripcion varchar(80),
+    @estado bit
+as
+begin
+    update categoria_producto
+    set nombre = @nombre,
+        descripcion = @descripcion,
+        estado = @estado
+    where id_categoria = @id
+end
+go
+
+create procedure sp_eliminar_categoria_producto
+    @id int
+as
+begin
+    update categoria_producto
+    set estado = 0
+    where id_categoria = @id
+end
+go
 
 -- PRODUCTO
-
 create procedure sp_crear_producto
 	@id_categoria int,
 	@nombre varchar(50),
 	@desc_corta varchar(50),
 	@desc_completa varchar(255),
 	@precio decimal(6,2),
-	@requiere_operacion bit = 1
+	@requiere_preparacion bit = 1
 as
 begin
 	insert into producto (id_categoria, nombre, desc_corta, desc_completa, precio, requiere_preparacion, estado, created_at)
-	values (@id_categoria, @nombre, @desc_corta, @desc_completa, @precio, @requiere_operacion, 1, GETDATE())
+	values (@id_categoria, @nombre, @desc_corta, @desc_completa, @precio, @requiere_preparacion, 1, GETDATE())
 end
 go
 

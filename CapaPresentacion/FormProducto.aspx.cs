@@ -16,6 +16,11 @@ namespace CapaPresentacion
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["IdUsuario"] == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
+
             if (!IsPostBack)
             {
                 CargarCategorias();
@@ -90,14 +95,14 @@ namespace CapaPresentacion
 
         protected void GvProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            HfIdProducto.Value = GvProductos.SelectedDataKey.Values[0].ToString();
-            DdlCategoria.SelectedValue = GvProductos.SelectedDataKey.Values[1].ToString();
-            TxtDescCompleta.Text = GvProductos.SelectedDataKey.Values[2].ToString();
+            HfIdProducto.Value = GvProductos.SelectedDataKey.Values["Id_producto"].ToString();
+            DdlCategoria.SelectedValue = GvProductos.SelectedDataKey.Values["Id_categoria"].ToString();
+            TxtDescCompleta.Text = GvProductos.SelectedDataKey.Values["Desc_completa"].ToString();
 
             TxtNombre.Text = HttpUtility.HtmlDecode(GvProductos.SelectedRow.Cells[0].Text);
             TxtDescCorta.Text = HttpUtility.HtmlDecode(GvProductos.SelectedRow.Cells[1].Text);
             TxtPrecio.Text = GvProductos.SelectedRow.Cells[2].Text;
-            ChkRequierePreparacion.Checked = GvProductos.SelectedRow.Cells[3].Text == "True";
+            ChkRequierePreparacion.Checked = (bool)GvProductos.SelectedDataKey.Values["Requiere_preparacion"];
             LblMensaje.Text = string.Empty;
         }
 

@@ -45,7 +45,7 @@
 
     <asp:GridView ID="GvCategorias" runat="server"
         AutoGenerateColumns="false"
-        DataKeyNames="Id_categoria"
+        DataKeyNames="Id_Categoria, Estado"
         OnSelectedIndexChanged="GvCategorias_SelectedIndexChanged"
         OnRowDeleting="GvCategorias_RowDeleting">
         <Columns>

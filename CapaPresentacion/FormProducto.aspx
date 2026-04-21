@@ -82,7 +82,7 @@
 
     <asp:GridView ID="GvProductos" runat="server"
         AutoGenerateColumns="false"
-        DataKeyNames="Id_producto,Id_categoria,Desc_completa"
+        DataKeyNames="Id_producto,Id_categoria,Desc_completa,Requiere_preparacion"
         OnSelectedIndexChanged="GvProductos_SelectedIndexChanged"
         OnRowDeleting="GvProductos_RowDeleting">
         <Columns>

@@ -107,3 +107,39 @@ go
 -- drop table rol;
 -- drop table categoria_producto;
 -- drop table mesa;
+
+
+
+-- INSERTS INICIALES
+
+-- ROLES
+insert into rol (nombre) values
+('Administrador'),
+('Chef'),
+('Mesero');
+go
+
+insert into usuario (
+    id_rol,
+    nombre,
+    apellido,
+    correo,
+    contra_hash,
+    estado
+) values (
+    1, -- Administrador
+    'Admin',
+    'Principal',
+    'admin@admin.com',
+    '$2a$12$406MSiN4lTu3.GMMcEzCmuyZ0e/5UyQnABAW52NfOKUzt./RROINS',
+    1
+);
+go
+
+-- CATEGORÍAS
+insert into categoria_producto (nombre, descripcion) 
+values ('Bebidas', 'Bebidas frías y calientes');
+
+insert into categoria_producto (nombre, descripcion) 
+values ('Platos', 'Comidas principales');
+go

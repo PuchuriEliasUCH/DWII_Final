@@ -16,6 +16,11 @@ namespace CapaPresentacion
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["IdUsuario"] == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
+
             if (!IsPostBack)
             {
                 CargarDatos();
@@ -77,8 +82,10 @@ namespace CapaPresentacion
         {
             HfIdCategoria.Value = GvCategorias.SelectedDataKey.Value.ToString();
             TxtNombre.Text = GvCategorias.SelectedRow.Cells[0].Text;
-            TxtDescripcion.Text = GvCategorias.SelectedRow.Cells[1].Text;
-            DdlEstado.SelectedValue = (GvCategorias.SelectedRow.Cells[2].Text == "Activo").ToString().ToLower();
+            TxtDescripcion.Text = HttpUtility.HtmlDecode(GvCategorias.SelectedRow.Cells[1].Text);
+
+            bool estado = (bool)GvCategorias.DataKeys[GvCategorias.SelectedIndex].Values["Estado"];
+            DdlEstado.SelectedValue = estado.ToString().ToLower();
 
             LblMensaje.Text = string.Empty;
         }

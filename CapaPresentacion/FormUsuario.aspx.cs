@@ -9,6 +9,7 @@ namespace CapaPresentacion
     public partial class FormUsuario : Page
     {
         private readonly UsuarioNegocio _usuarioNeg = new UsuarioNegocio();
+        private readonly RolNegocio _rolNeg = new RolNegocio();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -20,6 +21,7 @@ namespace CapaPresentacion
             if (!IsPostBack)
             {
                 CargarDatos();
+                CargarRoles();
             }
         }
 
@@ -27,6 +29,13 @@ namespace CapaPresentacion
         {
             GvUsuarios.DataSource = _usuarioNeg.ListarDTO();
             GvUsuarios.DataBind();
+        }
+
+        private void CargarRoles()
+        { 
+            DdlRol.DataSource = _rolNeg.Listar();
+            DdlRol.DataBind();
+            DdlRol.Items.Insert(0, new ListItem("--Seleccione--", "0"));
         }
 
         protected void BtnGuardar_Click(object sender, EventArgs e)

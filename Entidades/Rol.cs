@@ -9,6 +9,6 @@ namespace Entidades
     public class Rol
     {
         public int Id_rol { get; set; }
-        public int Nombre { get; set; }
+        public string Nombre { get; set; }
     }
 }

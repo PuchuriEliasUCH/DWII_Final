@@ -48,6 +48,7 @@
     <Compile Include="Repositorios\CategoriaRepository.cs" />
     <Compile Include="Repositorios\MesaRepository.cs" />
     <Compile Include="Repositorios\ProductoRepository.cs" />
+    <Compile Include="Repositorios\RolRepository.cs" />
     <Compile Include="Repositorios\UsuarioRepository.cs" />
     <Compile Include="Transacciones.cs" />
   </ItemGroup>
