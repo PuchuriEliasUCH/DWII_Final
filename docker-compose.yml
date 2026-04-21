@@ -12,6 +12,8 @@ services:
     # Ya tenemos instalado SQLSERVER XDD 
     # Puerto por defecto: 1433
     # Orden -> "puerto_PC:puerto_MV"
+    # Comando de Ejecucion:
+    # docker-compose up -d
     ports:
       - "1434:1433" 
 

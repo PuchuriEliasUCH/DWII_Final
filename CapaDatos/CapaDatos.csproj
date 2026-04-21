@@ -45,8 +45,9 @@
     <Compile Include="Conexion.cs" />
     <Compile Include="Interfaces\ICrudGeneral.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\CategoriaRepository.cs" />
     <Compile Include="Repositorios\MesaRepository.cs" />
-    <Compile Include="Repositorios\RolRepository.cs" />
+    <Compile Include="Repositorios\ProductoRepository.cs" />
     <Compile Include="Repositorios\UsuarioRepository.cs" />
     <Compile Include="Transacciones.cs" />
   </ItemGroup>

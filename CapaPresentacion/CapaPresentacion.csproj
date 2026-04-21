@@ -69,9 +69,11 @@
   <ItemGroup>
     <Content Include="Default.aspx" />
     <Content Include="FormMesa.aspx" />
+    <Content Include="FormProducto.aspx" />
     <Content Include="FormUsuario.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
+    <Content Include="FormCategoria.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Default.aspx.cs">
@@ -87,6 +89,13 @@
     </Compile>
     <Compile Include="FormMesa.aspx.designer.cs">
       <DependentUpon>FormMesa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormProducto.aspx.cs">
+      <DependentUpon>FormProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormProducto.aspx.designer.cs">
+      <DependentUpon>FormProducto.aspx</DependentUpon>
     </Compile>
     <Compile Include="FormUsuario.aspx.cs">
       <DependentUpon>FormUsuario.aspx</DependentUpon>
@@ -105,6 +114,13 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="FormCategoria.aspx.cs">
+      <DependentUpon>FormCategoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormCategoria.aspx.designer.cs">
+      <DependentUpon>FormCategoria.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

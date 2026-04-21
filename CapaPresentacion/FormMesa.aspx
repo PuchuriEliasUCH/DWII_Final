@@ -1,7 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FormMesa.aspx.cs" Inherits="CapaPresentacion.FormMesa" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Mesas</title>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <h2>Gestión de Mesas</h2>
 

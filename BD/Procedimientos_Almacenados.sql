@@ -86,3 +86,51 @@ end
 go
 
 select * from usuario;
+
+-- PRODUCTO
+
+create procedure sp_crear_producto
+	@id_categoria int,
+	@nombre varchar(50),
+	@desc_corta varchar(50),
+	@desc_completa varchar(255),
+	@precio decimal(6,2),
+	@requiere_operacion bit = 1
+as
+begin
+	insert into producto (id_categoria, nombre, desc_corta, desc_completa, precio, requiere_preparacion, estado, created_at)
+	values (@id_categoria, @nombre, @desc_corta, @desc_completa, @precio, @requiere_operacion, 1, GETDATE())
+end
+go
+
+create procedure sp_actualizar_producto
+    @id_producto int,
+    @id_categoria int,
+    @nombre varchar(80),
+    @desc_corta varchar(50),
+    @desc_completa varchar(255),
+    @precio decimal(6,2),
+    @requiere_preparacion bit
+as
+begin
+    update producto
+    set
+        id_categoria = @id_categoria,
+        nombre = @nombre,
+        desc_corta = @desc_corta,
+        desc_completa = @desc_completa,
+        precio = @precio,
+        requiere_preparacion = @requiere_preparacion
+    where id_producto = @id_producto
+end
+go
+
+create procedure sp_eliminar_producto
+    @id_producto int
+as
+begin
+    update producto
+    set estado = 0
+    where id_producto = @id_producto
+end
+go

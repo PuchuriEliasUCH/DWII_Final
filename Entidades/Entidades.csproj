@@ -52,5 +52,8 @@
     <Compile Include="Rol.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dto\Productos\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
