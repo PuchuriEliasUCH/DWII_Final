@@ -45,6 +45,7 @@
     <Compile Include="Detalle_pedido.cs" />
     <Compile Include="Dto\Usuarios\UsuarioGuardarDTO.cs" />
     <Compile Include="Dto\Usuarios\UsuarioListarDTO.cs" />
+    <Compile Include="Dto\Usuarios\UsuarioLoginDTO.cs" />
     <Compile Include="Mesa.cs" />
     <Compile Include="Pedido.cs" />
     <Compile Include="Producto.cs" />

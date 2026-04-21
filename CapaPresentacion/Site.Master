@@ -8,25 +8,38 @@
     <asp:ContentPlaceHolder ID="head" runat="server" />
 </head>
 <body>
-    <header>
-        <h1>AltaMesa</h1>
-        <nav>
-            <a href="Default.aspx">Inicio</a> |
-            <a href="FormMesa.aspx">Mesas</a> |
-            <a href="FormUsuario.aspx">Usuarios</a> |
-            <a href="FormProducto.aspx">Productos</a> |
-            <a href="FormCategoria.aspx">Categorías</a>
-        </nav>
-    </header>
+    <form id="form1" runat="server">
+        <header>
+            <h1>AltaMesa</h1>
 
-    <form runat="server">
+            <div>
+                <asp:Label ID="LblUsuario" runat="server" />
+                <asp:LinkButton 
+                ID="BtnCerrarSesion" 
+                runat="server" 
+                OnClick="BtnCerrarSesion_Click" 
+                Visible="false"
+                CausesValidation="false">
+                Cerrar sesión
+            </asp:LinkButton>
+
+            <nav>
+                <a href="Default.aspx">Inicio</a> |
+                <a href="FormMesa.aspx">Mesas</a> |
+                <a href="FormUsuario.aspx">Usuarios</a> |
+                <a href="FormProducto.aspx">Productos</a> |
+                <a href="FormCategoria.aspx">Categorias</a> |
+                <a href="Login.aspx">Login</a>
+            </nav>
+        </header>
+
         <main>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
         </main>
-    </form>
 
-    <footer>
-        <p>AltaMesa © 2025</p>
-    </footer>
+        <footer>
+            <p>AltaMesa © 2025</p>
+        </footer>
+    </form>
 </body>
 </html>

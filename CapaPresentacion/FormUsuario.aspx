@@ -43,7 +43,7 @@
 
         <div>
             <asp:Label Text="Correo: " runat="server" />
-            <asp:TextBox ID="TxtCorreo" runat="server" />
+            <asp:TextBox ID="TxtCorreo" runat="server" autocomplete="off" />
             <asp:RequiredFieldValidator
                 ControlToValidate="TxtCorreo"
                 ErrorMessage="El correo es requerido."
@@ -59,7 +59,7 @@
 
         <div>
             <asp:Label Text="Contraseña: " runat="server" />
-            <asp:TextBox ID="TxtContrasena" runat="server" TextMode="Password"/>
+            <asp:TextBox ID="TxtContrasena" runat="server" TextMode="Password" autocomplete="new-password" />
             <asp:RequiredFieldValidator ID="RfvContrasena"
                 ControlToValidate="TxtContrasena"
                 ErrorMessage="La contraseña es requerida."
@@ -73,7 +73,6 @@
                 Display="Dynamic"
                 EnableClientScript="false"
                 runat="server" />
-    
         </div>
 
         <div>
